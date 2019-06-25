@@ -102,7 +102,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-.vs/ProjectSettings.json
-.vs/slnx.sqlite
-.vs/VSWorkspaceState.json
-.vs/temp/v16/.suo
