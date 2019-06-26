@@ -1,11 +1,10 @@
 #Imports
-import time
-import requests
-import json
+from requests import get
+from json import loads
 import globalVars
 import inputManager
-import os
-import re
+from os import system
+from re import compile, findall
 
 # Sensor server port
 SENSOR_SERVER_PORT = 55555
@@ -32,12 +31,12 @@ ipsToTryFirst = []
 
 def sniff_ip(IP):
 	try:
-		response = requests.get('http://' + str(IP), verify=False, timeout=0.5)
+		response = get('http://' + str(IP), verify=False, timeout=0.5)
 	except:
 		return False
 	if response.status_code == STATUS_OK:
 		try:
-			jsonContent = json.loads(response.content)
+			jsonContent = loads(response.content)
 			global connected
 			connected = True
 			return True
@@ -65,12 +64,12 @@ def get_ip_to_try_first():
 	f = open("config/ips.list", "r")
 	if f.mode == 'r':
 		contents = f.read()
-		pattern = re.compile(r'<last_ip>(.*)</last_ip>')
+		pattern = compile(r'<last_ip>(.*)</last_ip>')
 
 		global firstTime
 		firstTime = True
 		global ipsToTryFirst
-		ipsToTryFirst = re.findall(pattern, contents)
+		ipsToTryFirst = findall(pattern, contents)
 		f.close()
 
 # fetch ips from config/ips.list. those ips are last known working ips and will be sniffed first
@@ -98,10 +97,10 @@ while True:
 				f = open("config/ips.list", "r")
 				if f.mode == 'r':
 					contents = f.read()
-					pattern = re.compile(r'<last_ip>(.*)</last_ip>')
+					pattern = compile(r'<last_ip>(.*)</last_ip>')
 
 					firstTime = True
-					for (ip) in re.findall(pattern, contents):
+					for (ip) in findall(pattern, contents):
 						firstTime = False
 						if ip != ipToSniff:
 							f = open("config/ips.list", "a+")
@@ -120,9 +119,9 @@ while True:
 			globalVars.libAdvDisplay.draw_centered_text('Press <key1> to type', globalVars.top + 15, 255, draw)
 			globalVars.libAdvDisplay.draw_centered_text('an IP address or', globalVars.top + 24, 255, draw)
 			globalVars.libAdvDisplay.draw_centered_text('<key2> to retry', globalVars.top + 33, 255, draw)
-			if inputManager.key1pressed():
-				os.system('python manual_ip_selection.py 1')
-			if inputManager.key2pressed():
+			if inputManager.key1_pressed():
+				system('python manual_ip_selection.py 1')
+			if inputManager.key2_pressed():
 				indexIp = 0
 
 GPIO.cleanup()

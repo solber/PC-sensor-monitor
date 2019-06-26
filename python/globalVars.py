@@ -39,3 +39,7 @@ device = sh1106(serial, rotate=2) #sh1106
 def get_ip():
     cmd = "hostname -I | cut -d\' \' -f1"
     return subprocess.check_output(cmd, shell=True)
+
+
+def get_width():
+    return width
