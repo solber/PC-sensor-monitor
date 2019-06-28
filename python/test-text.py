@@ -1,4 +1,6 @@
 import globalVars
+import libSensor
+from time import sleep
 
 font5L = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 10)
 font3G0 = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 14)
@@ -27,10 +29,13 @@ def draw_3graph(title, subtitle, position, (actualValue, minValue, maxValue)): #
 	fill = scale_value(actualValue, minValue, maxValue, 126 - titleSize[0] + 5)
 	draw.rectangle((titleSize[0] + 8, graph3Y[position] + 10, fill + titleSize[0] + 4, graph3Y[position] + 16), outline=0, fill=1)	# Filling graph
 
-while True:
-	with globalVars.canvas(globalVars.device) as draw:
-		draw_3graph("Cpu", "Freq", 0, (38,0,70))
-		draw_3graph("Gpu", "Clock", 1, (32,0,90))
-		draw_3graph("MB", "Vram", 2, (25,0,50))
 
+
+while True:
+	test = libSensor.get_cpu_info(libSensor.INFO_CPU_TEMP)
+	with globalVars.canvas(globalVars.device) as draw:
+		draw_3graph("Cpu", "Temp", 0, (int(test[0][libSensor.SENSOR_VALUE]),0,70))
+		#draw_3graph("Gpu", "Clock", 1, (32,0,90))
+		#draw_3graph("MB", "Vram", 2, (25,0,50))
+		sleep(1)
 GPIO.cleanup()
