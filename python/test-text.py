@@ -33,9 +33,12 @@ def draw_3graph(title, subtitle, position, (actualValue, minValue, maxValue)): #
 
 while True:
 	test = libSensor.get_cpu_info(libSensor.INFO_CPU_TEMP)
+	testVal = round(float((test[0][libSensor.SENSOR_VALUE]).replace(',', '.')))
+	testLoad = libSensor.get_cpu_info(libSensor.INFO_CPU_LOAD)
+	testLoadVal = round(float((testLoad[5][libSensor.SENSOR_VALUE]).replace(',', '.')))
 	with globalVars.canvas(globalVars.device) as draw:
-		draw_3graph("Cpu", "Temp", 0, (int(test[0][libSensor.SENSOR_VALUE]),0,70))
-		#draw_3graph("Gpu", "Clock", 1, (32,0,90))
+		draw_3graph("Cpu", "Temp", 0, (testVal,0,70))
+		draw_3graph("Cpu", "Load", 1, (testLoadVal,0,100))
 		#draw_3graph("MB", "Vram", 2, (25,0,50))
 		sleep(1)
 GPIO.cleanup()
