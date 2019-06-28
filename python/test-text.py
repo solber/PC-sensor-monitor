@@ -30,14 +30,6 @@ def draw_3graph(title, subtitle, position, (actualValue, minValue, maxValue)): #
 	draw.rectangle((titleSize[0] + 8, graph3Y[position] + 10, (titleSize[0] + 8) + fill, graph3Y[position] + 16), outline=0, fill=1)	# Filling graph
 
 while True:
-<<<<<<< Updated upstream
-	with globalVars.canvas(globalVars.device) as draw:
-		draw_3graph("Cpu", "Freq", 0, (38,0,70))
-		draw_3graph("Gpu", "Clock", 1, (32,0,90))
-		draw_3graph("MB", "Vram", 2, (25,0,50))
-
-GPIO.cleanup()
-=======
 	test = libSensor.get_cpu_info(libSensor.INFO_CPU_TEMP)
 	testVal = float((test[1][libSensor.SENSOR_VALUE]).replace(',', '.'))
 	testLoad = libSensor.get_cpu_info(libSensor.INFO_CPU_LOAD)
@@ -49,8 +41,3 @@ GPIO.cleanup()
 		#draw_3graph("MB", "Vram", 2, (25,0,50))
 		sleep(1)
 GPIO.cleanup()
-
-
-
-
->>>>>>> Stashed changes
