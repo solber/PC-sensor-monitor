@@ -1,12 +1,14 @@
 import globalVars
 
 font5L = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 10)
-font3G0 = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 14)
+font3G0 = globalVars.ImageFont.truetype("./lucidaSTWB.ttf", 14)
 font3G1 = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 7)
 
 def scale_value(actualValue, minValue, maxValue, graphLength): # Used to match a sensor value range with a graph length
-	
-	scaledValue = (graphLength * actualValue) / (maxValue - minValue)
+	if actualValue >= maxValue:
+		scaledValue = graphLength
+	else:
+		scaledValue = (graphLength * actualValue) / (maxValue - minValue)
 	return int(scaledValue)
 
 
@@ -24,13 +26,31 @@ def draw_3graph(title, subtitle, position, (actualValue, minValue, maxValue)): #
 	
 	draw.rectangle((titleSize[0] + 6, graph3Y[position] + 8, 127, graph3Y[position] + 18), outline=255, fill=0)	# Empty graph
 
-	fill = scale_value(actualValue, minValue, maxValue, 126 - titleSize[0] + 5)
-	draw.rectangle((titleSize[0] + 8, graph3Y[position] + 10, fill + titleSize[0] + 4, graph3Y[position] + 16), outline=0, fill=1)	# Filling graph
+	fill = scale_value(actualValue, minValue, maxValue, 125 - (titleSize[0] + 8))
+	draw.rectangle((titleSize[0] + 8, graph3Y[position] + 10, (titleSize[0] + 8) + fill, graph3Y[position] + 16), outline=0, fill=1)	# Filling graph
 
 while True:
+<<<<<<< Updated upstream
 	with globalVars.canvas(globalVars.device) as draw:
 		draw_3graph("Cpu", "Freq", 0, (38,0,70))
 		draw_3graph("Gpu", "Clock", 1, (32,0,90))
 		draw_3graph("MB", "Vram", 2, (25,0,50))
 
 GPIO.cleanup()
+=======
+	test = libSensor.get_cpu_info(libSensor.INFO_CPU_TEMP)
+	testVal = float((test[1][libSensor.SENSOR_VALUE]).replace(',', '.'))
+	testLoad = libSensor.get_cpu_info(libSensor.INFO_CPU_LOAD)
+	testLoadVal = round(float((testLoad[5][libSensor.SENSOR_VALUE]).replace(',', '.')))
+
+	with globalVars.canvas(globalVars.device) as draw:
+		draw_3graph("Cpu", "Temp", 0, (testVal,0,80))
+		draw_3graph("Cpu", "Load", 1, (testLoadVal,0,100))
+		#draw_3graph("MB", "Vram", 2, (25,0,50))
+		sleep(1)
+GPIO.cleanup()
+
+
+
+
+>>>>>>> Stashed changes
