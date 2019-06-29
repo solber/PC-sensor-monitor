@@ -4,7 +4,6 @@ from json import loads
 import globalVars
 import inputManager
 from os import system
-from re import compile, findall
 
 # Sensor server port
 SENSOR_SERVER_PORT = 55555
@@ -62,16 +61,11 @@ def draw_progress_bar():
 
 
 def get_ip_to_try_first():
-	f = open("config/ips.list", "r")
-	if f.mode == 'r':
-		contents = f.read()
-		pattern = compile(r'<last_ip>(.*)</last_ip>')
-
-		global firstTime
-		firstTime = True
-		global ipsToTryFirst
-		ipsToTryFirst = findall(pattern, contents)
-		f.close()
+	from fileManager import get_ips_to_try
+	global firstTime
+	firstTime = True
+	global ipsToTryFirst
+	ipsToTryFirst = get_ips_to_try()
 
 
 
@@ -112,22 +106,8 @@ def render_sniffer():
 					indexIp = 0
 	if connected:
 		if ipWritten is False:
-			f = open("config/ips.list", "r")
-			if f.mode == 'r':
-				contents = f.read()
-				pattern = compile(r'<last_ip>(.*)</last_ip>')
-
-				firstTime = True
-				for (ip) in findall(pattern, contents):
-					firstTime = False
-					if ip != ipToSniff:
-						f = open("config/ips.list", "a+")
-						f.write("<last_ip>" + str(ipToSniff) + "</last_ip>\r\n")
-						ipWritten = True
-				if firstTime:
-					f = open("config/ips.list", "w+")
-					f.write("<last_ip>" + str(ipToSniff) + "</last_ip>\r\n")
-				f.close()
+			from fileManager import write_working_ip
+			ipWritten = write_working_ip(ipToSniff)
 		return ipToSniff
 	else:
 		return None

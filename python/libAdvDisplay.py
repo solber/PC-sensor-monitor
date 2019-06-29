@@ -1,8 +1,8 @@
 from PIL import ImageFont
 width = 128
 font = ImageFont.load_default()
-cinzel15 = ImageFont.truetype("Cinzel-Regular.otf", 15)
-cinzel10 = ImageFont.truetype("Cinzel-Regular.otf", 10)
+cinzel15 = ImageFont.truetype("./fonts/Cinzel-Regular.otf", 15)
+cinzel10 = ImageFont.truetype("./fonts/Cinzel-Regular.otf", 10)
 
 
 def draw_center_text_font(text, y, fill, draw, customFont):
