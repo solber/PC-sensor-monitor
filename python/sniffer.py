@@ -97,27 +97,7 @@ def render_sniffer():
 					if sniff_ip(ipToSniff) is False and indexIp < MAX_IP_CHECK:
 						indexIp = indexIp + 1
 						draw_progress_bar()
-			# is connected
-			else:
-				globalVars.libAdvDisplay.draw_centered_text('Connected', globalVars.top + 27, 255, draw)
 
-				if ipWritten is False:
-					f = open("config/ips.list", "r")
-					if f.mode == 'r':
-						contents = f.read()
-						pattern = compile(r'<last_ip>(.*)</last_ip>')
-
-						firstTime = True
-						for (ip) in findall(pattern, contents):
-							firstTime = False
-							if ip != ipToSniff:
-								f = open("config/ips.list", "a+")
-								f.write("<last_ip>" + str(ipToSniff) + "</last_ip>\r\n")
-								ipWritten = True
-						if firstTime:
-							f = open("config/ips.list", "w+")
-							f.write("<last_ip>" + str(ipToSniff) + "</last_ip>\r\n")
-						f.close()
 			if indexIp < MAX_IP_CHECK:
 				globalVars.libAdvDisplay.draw_centered_text('Searching for server', globalVars.top, 255, draw)
 				globalVars.libAdvDisplay.draw_centered_text(ipToSniff, globalVars.height - 12, 255, draw)
@@ -131,6 +111,23 @@ def render_sniffer():
 				if inputManager.key2_pressed():
 					indexIp = 0
 	if connected:
+		if ipWritten is False:
+			f = open("config/ips.list", "r")
+			if f.mode == 'r':
+				contents = f.read()
+				pattern = compile(r'<last_ip>(.*)</last_ip>')
+
+				firstTime = True
+				for (ip) in findall(pattern, contents):
+					firstTime = False
+					if ip != ipToSniff:
+						f = open("config/ips.list", "a+")
+						f.write("<last_ip>" + str(ipToSniff) + "</last_ip>\r\n")
+						ipWritten = True
+				if firstTime:
+					f = open("config/ips.list", "w+")
+					f.write("<last_ip>" + str(ipToSniff) + "</last_ip>\r\n")
+				f.close()
 		return ipToSniff
 	else:
 		return None
