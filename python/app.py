@@ -11,7 +11,6 @@ while True:
     if currentWindow is WINDOW_NONE:
         currentWindow = WINDOW_SPLASH
         from splash import render_splash
-        from time import sleep
         render_splash()
 
     if currentWindow is WINDOW_SPLASH:
