@@ -22,6 +22,8 @@ width = 128
 height = 64
 image = Image.new('1', (width, height))
 
+draw = None
+
 # First define some constants to allow easy resizing of shapes.
 padding = -2
 top = padding

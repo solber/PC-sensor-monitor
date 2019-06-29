@@ -6,6 +6,8 @@ font5L = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 10)
 font3G0 = globalVars.ImageFont.truetype("./lucidaSTWB.ttf", 14)
 font3G1 = globalVars.ImageFont.truetype("./lucidaSTW.ttf", 7)
 
+draw = None
+
 def scale_value(actualValue, minValue, maxValue, graphLength): # Used to match a sensor value range with a graph length
 	if actualValue >= maxValue:
 		scaledValue = graphLength
@@ -32,16 +34,16 @@ def draw_3graph(title, subtitle, position, (actualValue, minValue, maxValue)): #
 	draw.rectangle((titleSize[0] + 8, graph3Y[position] + 10, (titleSize[0] + 8) + fill, graph3Y[position] + 16), outline=0, fill=1)	# Filling graph
 
 
+def render_bars(serverip):
+	libSensor.set_ip(serverip)
+	global draw
+	while True:
+		temp = libSensor.get_cpu_package_temp()
+		load = libSensor.get_cpu_total_load()
+		clock = libSensor.get_cpu_clock_total_usage()
 
-while True:
-	test = libSensor.get_cpu_info(libSensor.INFO_CPU_TEMP)
-	testVal = float((test[1][libSensor.SENSOR_VALUE]).replace(',', '.'))
-	testLoad = libSensor.get_cpu_info(libSensor.INFO_CPU_LOAD)
-	testLoadVal = round(float((testLoad[5][libSensor.SENSOR_VALUE]).replace(',', '.')))
-
-	with globalVars.canvas(globalVars.device) as draw:
-		draw_3graph("Cpu", "Temp", 0, (testVal,0,80))
-		draw_3graph("Cpu", "Load", 1, (testLoadVal,0,100))
-		#draw_3graph("MB", "Vram", 2, (25,0,50))
-		sleep(1)
-GPIO.cleanup()
+		with globalVars.canvas(globalVars.device) as draw:
+			draw_3graph("TMP", "CPU", 0, (temp, 25, 80))
+			draw_3graph("LOD", "CPU", 1, (load, 0, 100))
+			draw_3graph("CLK", "CPU", 2, (clock, 0, 3800))
+			sleep(1)
