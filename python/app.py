@@ -1,23 +1,23 @@
-serverip = None
+server_ip = None
 
 WINDOW_NONE = 0
 WINDOW_SPLASH = 1
 WINDOW_SNIFFER = 2
 
-currentWindow = WINDOW_NONE
+current_window = WINDOW_NONE
 
 
 while True:
-    if currentWindow is WINDOW_NONE:
-        currentWindow = WINDOW_SPLASH
+    if current_window is WINDOW_NONE:
+        current_window = WINDOW_SPLASH
         from splash import render_splash
         render_splash()
 
-    if currentWindow is WINDOW_SPLASH:
-        currentWindow = WINDOW_SNIFFER
+    if current_window is WINDOW_SPLASH:
+        current_window = WINDOW_SNIFFER
         from sniffer import render_sniffer
-        serverip = render_sniffer()
+        server_ip = render_sniffer()
 
-    if currentWindow is WINDOW_SNIFFER and serverip is not None:
+    if current_window is WINDOW_SNIFFER and server_ip is not None:
         from cpuBars import render_bars
-        render_bars(serverip)
+        render_bars(server_ip)

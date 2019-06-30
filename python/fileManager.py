@@ -14,22 +14,22 @@ def get_ips_to_try():
     return []
 
 
-def write_working_ip(ipToWrite):
+def write_working_ip(ip_to_write):
     f = open(IP_LIST_PATH, "r")
     if f.mode == 'r':
         contents = f.read()
         pattern = compile(r'<last_ip>(.*)</last_ip>')
 
-        firsttime = True
+        first_time = True
         for (ip) in findall(pattern, contents):
-            firsttime = False
-            if ip != ipToWrite:
+            first_time = False
+            if ip != ip_to_write:
                 f = open("config/ips.list", "a+")
-                f.write("<last_ip>" + str(ipToWrite) + "</last_ip>\r\n")
+                f.write("<last_ip>" + str(ip_to_write) + "</last_ip>\r\n")
                 return True
-        if firsttime:
+        if first_time:
             f = open("config/ips.list", "w+")
-            f.write("<last_ip>" + str(ipToWrite) + "</last_ip>\r\n")
+            f.write("<last_ip>" + str(ip_to_write) + "</last_ip>\r\n")
             return True
         f.close()
         return False

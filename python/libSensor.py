@@ -53,9 +53,6 @@ def set_ip(ip):
 def get_sensors():
     try:
         global sensors
-        #if sensors:
-            #return sensors
-        #else:
         response = get('http://' + str(IP))
     except:
         raise Exception('Unable to request http://' + str(IP))
@@ -137,7 +134,7 @@ def get_cpu_voltage():
             return convert_to_float(component[SENSOR_VALUE])
     return 0
 
-
+# some example code
 #print(get_cpu_package_temp())
 #print(get_cpu_clock_total_usage())
 #print(get_cpu_total_load())
