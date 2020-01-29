@@ -17,8 +17,7 @@ def scale_value(actualValue, minValue, maxValue, graphLength):  # Used to match 
 	return int(scaledValue)
 
 
-def draw_3graph(title, subtitle, position,
-				(actualValue, minValue, maxValue)):  # Designed to draw 3 graph on top of each other
+def draw_3graph(title, subtitle, position, (actualValue, minValue, maxValue)):  # Designed to draw 3 graph on top of each other
 
 	graph3Y = [0, 22, 44]
 	g3TextY = [2, 24, 46]

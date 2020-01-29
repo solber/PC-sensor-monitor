@@ -20,7 +20,7 @@ PADDING = 2
 BAR_SIZE = 3
 SPACING_BAR = 1
 
-MAX_IP_CHECK = 100
+MAX_IP_CHECK = 1
 
 # end const
 indexIp = 0
@@ -107,7 +107,7 @@ def render_sniffer():
 				globalVars.libAdvDisplay.draw_centered_text('an IP address or', globalVars.top + 24, 255, draw)
 				globalVars.libAdvDisplay.draw_centered_text('<key2> to retry', globalVars.top + 33, 255, draw)
 				if inputManager.key1_pressed():
-					system('python manual_ip_selection.py 1')
+					return 'manual_ip_selection_window'
 				if inputManager.key2_pressed():
 					indexIp = 0
 	if connected:

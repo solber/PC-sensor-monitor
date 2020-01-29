@@ -35,3 +35,28 @@ def key2_pressed():
     if GPIO.input(KEY2_PIN) == False:
         return True
     return False
+
+def key_up_pressed():
+    if GPIO.input(KEY_UP_PIN) == False:
+        return True
+    return False
+
+def key_down_pressed():
+    if GPIO.input(KEY_DOWN_PIN) == False:
+        return True
+    return False
+
+def key_left_pressed():
+    if GPIO.input(KEY_LEFT_PIN) == False:
+        return True
+    return False
+
+def key_right_pressed():
+    if GPIO.input(KEY_RIGHT_PIN) == False:
+        return True
+    return False
+
+def key_press_pressed():
+    if GPIO.input(KEY_PRESS_PIN) == False:
+        return True
+    return False
